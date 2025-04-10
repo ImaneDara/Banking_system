@@ -39,7 +39,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -64,7 +64,7 @@
      <item>
       <spacer name="horizontalSpacerLeft">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -89,7 +89,7 @@
      <item>
       <widget class="QTableView" name="tableViewTransactions">
        <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
+        <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
        </property>
       </widget>
      </item>
@@ -108,7 +108,7 @@
      <item>
       <spacer name="horizontalSpacerButtons">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -117,6 +117,20 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonValider">
+       <property name="text">
+        <string>Valider</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonRejeter">
+       <property name="text">
+        <string>Rejeter</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButtonClose">
@@ -146,17 +160,17 @@
        </item>
        <item>
         <property name="text">
-         <string>Virement</string>
+         <string>Type</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Versement</string>
+         <string>Date</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Retrait</string>
+         <string>Balance</string>
         </property>
        </item>
       </widget>
@@ -164,7 +178,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -190,7 +204,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>

@@ -17,6 +17,7 @@ UIListUser::UIListUser(QObject* controller) :
     connect(ui->pushButtonClose, SIGNAL(clicked()), controller, SLOT(onClose_UIListUser()));
     connect(ui->pushButtonDelete, SIGNAL(clicked()), controller, SLOT(onDelete_UIListUser()));
     connect(ui->pushButtonUpdate, SIGNAL(clicked()), controller, SLOT(onUpdate_UIListUser()));
+    connect(ui->pushButtonNotification, SIGNAL(clicked()), controller, SLOT(onNotif_UIClient()));
 }
 
 void UIListUser::setTableViewModel(UserModel* userModel)

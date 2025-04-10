@@ -2,8 +2,12 @@
 #define UICLIENT_H
 
 #include "accountmodel.h"
+#include "uiprofile.h"
 #include <uiabstractwindow.h>
+#include <QFormLayout>
+#include <QLabel>
 #include <QMainWindow>
+#include "uiprofile.h"
 
 namespace Ui {
 class UIClient;
@@ -20,6 +24,10 @@ public:
     void updateTitle (QString libelle);
     void showTransactionForm(QString labelCurrentTransaction, QString typeTransaction);
     void hideTransactionForm();
+    void showProfileForm(const QMap<QString, QString>& clientData);
+    void showProfileForm();
+    void hideProfileForm();
+    void setClientInfo(const QMap<QString, QString>& clientData);
 
     QString getNumeroBeneficiaire();
     QString getMontant ();
@@ -30,6 +38,13 @@ public:
 private:
     QString typeTransaction;
     Ui::UIClient *ui;
+
+    uiprofile* profileWindow;
+
+    QWidget* profileWidget;
+    QFormLayout* profileLayout;
+    QLabel* profileLabels[8]; // Adjust size based on how many fields you have
+    QLabel* profileValues[8];
 };
 
 #endif // UICLIENT_H

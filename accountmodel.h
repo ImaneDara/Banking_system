@@ -34,6 +34,7 @@ public:
     void readAll();
 
     void readBy(int clientId);
+    Account readByAccountNumber(const QString &accountNumber);
     void setHeaderTitle();
 
     AccountModel();

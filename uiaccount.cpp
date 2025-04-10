@@ -44,18 +44,24 @@ QString UIAccount::getAccountId()
     return ui->lineEditAccountId->text();
 }
 
-void UIAccount::reinit()
+QString UIAccount::getStatut()
 {
-    populate("-1", "-1", "", "COURANT", "0");
+    return ui->comboBoxStatut->currentText();
 }
 
-void UIAccount::populate (QString accountId, QString idClient, QString accountNumber, QString type, QString balance)
+void UIAccount::reinit()
+{
+    populate("-1", "-1", "", "COURANT", "0", "ACTIF");
+}
+
+void UIAccount::populate (QString accountId, QString idClient, QString accountNumber, QString type, QString balance, QString statut)
 {
     ui->lineEditAccountId->setText(accountId);
 	ui->lineEditIdClient->setText(idClient);
     ui->lineEditAccountNumber->setText(accountNumber);    
     ui->comboBoxType->setCurrentText(type);    
     ui->lineEditBalance->setText(balance);
+    ui->comboBoxStatut->setCurrentText(statut);
 }
 
 void UIAccount::updateTitle(QString libelle)
@@ -70,6 +76,7 @@ void UIAccount::deactivateCreate()
     ui->pushButtonUpdate->setEnabled(true);
 
     ui->lineEditBalance->setEnabled(false);
+    ui->comboBoxStatut->setEnabled(false);
 }
 
 void UIAccount::deactivateUpdate()

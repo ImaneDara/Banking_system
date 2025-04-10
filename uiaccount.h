@@ -24,10 +24,11 @@ public:
     QString getType();
     QString getBalance();
     QString getAccountId();
+    QString getStatut();
 
     void reinit();
 
-    void populate (QString identifiant, QString idClient, QString accountNumber, QString type, QString balance);
+    void populate (QString identifiant, QString idClient, QString accountNumber, QString type, QString balance, QString statut);
     void updateTitle (QString libelle);
 
     void deactivateCreate();

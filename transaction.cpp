@@ -41,3 +41,4 @@ Transaction::Transaction (QString _type,
         date (_date),
         statut (_statut)
 {}
+

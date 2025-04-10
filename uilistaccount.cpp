@@ -18,6 +18,8 @@ UIListAccount::UIListAccount(QObject* controller) :
     connect(ui->pushButtonModifier, SIGNAL(clicked()), controller, SLOT(onModifier_UIListAccount()));	
     connect(ui->pushButtonOuvrir, SIGNAL(clicked()), controller, SLOT(onOuvrir_UIListAccount()));
 	connect(ui->pushButtonClose, SIGNAL(clicked()), controller, SLOT(onClose_UIListAccount()));
+    connect(ui->pushButtonGeler, SIGNAL(clicked()), controller, SLOT(onGeler_UIListAccount()));
+    connect(ui->pushButtonActiver, SIGNAL(clicked()), controller, SLOT(onActiver_UIListAccount()));
 }
 
 void UIListAccount::setTableViewModel(AccountModel* accountModel)

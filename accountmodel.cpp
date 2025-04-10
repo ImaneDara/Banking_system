@@ -1,4 +1,7 @@
 #include "accountmodel.h"
+#include <QDebug>          // For qCritical(), qDebug()
+#include <QSqlError>       // For QSqlError (used by lastError())
+#include <QSqlQuery>
 
 AccountModel::AccountModel()
 {
@@ -12,8 +15,8 @@ void AccountModel::create(Account account)
     QSqlQuery query(dbManager->database());
 
     query.prepare("INSERT INTO t_accounts "
-                  "(clientId, number, type, balance) VALUES "
-                  "(:idClient, :number, :type, :balance)");
+                  "(clientId, number, type, balance, statut) VALUES "
+                  "(:idClient, :number, :type, :balance, 'ACTIF')");
 
     query.bindValue(":idClient", account.getIdClient());
     query.bindValue(":number", account.getNumber());
@@ -34,13 +37,15 @@ void AccountModel::update(Account account)
 
     query.prepare("UPDATE t_accounts SET "
                   "number=:number, "
-                  "type=:type, balance=:balance "
+                  "type=:type, balance=:balance, "
+                  "statut=:statut "  // Added statut
                   "WHERE id=:id");
 
     query.bindValue(":number", account.getNumber());
     query.bindValue(":balance", account.getBalance());
     query.bindValue(":type", account.getType());
     query.bindValue(":id", account.getId());
+    query.bindValue(":statut", account.getStatut());
 
     query.exec();
 
@@ -70,6 +75,7 @@ Account AccountModel::read(int id)
         account.setNumber(query.record().field("number").value().toString());
         account.setType(query.record().field("type").value().toString());
         account.setBalance(query.record().field("balance").value().toDouble());
+        account.setStatut(query.record().field("statut").value().toString());
     }
     else
     {
@@ -99,6 +105,7 @@ QList<Account> AccountModel::list()
         account.setNumber(query.record().field("number").value().toString());
         account.setType(query.record().field("type").value().toString());
         account.setBalance(query.record().field("balance").value().toDouble());
+        account.setStatut(query.record().field("statut").value().toString());
 
         accounts.push_back(account);
     }
@@ -111,14 +118,14 @@ QList<Account> AccountModel::list()
 void AccountModel::readAll(int clientId)
 {
     dbManager->open();
-
     QSqlDatabase database = dbManager->database();
 
-    this->setQuery("SELECT id, clientId, number, type, balance"
-                   " FROM t_accounts WHERE clientId=:clientId", database);
-    this->query().bindValue(":clientId", clientId);
-    setHeaderTitle();
+    QSqlQuery query(database);
+    query.prepare("SELECT id, clientId, number, type, balance, statut FROM t_accounts WHERE clientId = :clientId");
+    query.bindValue(":clientId", clientId);
 
+    this->setQuery(std::move(query)); // Use std::move to pass the query
+    setHeaderTitle();
     dbManager->close();
 }
 
@@ -128,8 +135,7 @@ void AccountModel::readAll()
 
     QSqlDatabase database = dbManager->database();
 
-    this->setQuery("SELECT id, clientId, number, type, balance"
-                   " FROM t_accounts", database);
+    this->setQuery("SELECT id, clientId, number, type, balance, statut FROM t_accounts", database);
     setHeaderTitle();
 
     dbManager->close();
@@ -139,13 +145,39 @@ void AccountModel::readBy(int clientId)
 {
     dbManager->open();
     QSqlQuery query(dbManager->database());
-    query.prepare("SELECT id, clientId, number, type, balance "
-                  "FROM t_accounts WHERE clientId=:clientId");
+    query.prepare("SELECT id, clientId, number, type, balance, statut FROM t_accounts WHERE clientId=:clientId");
     query.bindValue(":clientId", clientId);
     query.exec();
     this->setQuery(query);
     setHeaderTitle();
     dbManager->close();
+}
+
+Account AccountModel::readByAccountNumber(const QString &accountNumber)
+{
+    dbManager->open();
+    QSqlQuery query(dbManager->database());
+    query.prepare("SELECT * FROM t_accounts WHERE number = :number");
+    query.bindValue(":number", accountNumber);
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return Account();
+    }
+
+    if (!query.next()) {
+        qDebug() << "No account found with number:" << accountNumber;
+        return Account();
+    }
+
+    Account account;
+    account.setId(query.value("id").toInt());
+    account.setNumber(query.value("number").toString());
+    account.setBalance(query.value("balance").toDouble());
+    account.setStatut(query.value("statut").toString());
+    // Set other account properties as needed
+
+    return account;
 }
 
 void AccountModel::setHeaderTitle()
@@ -155,4 +187,6 @@ void AccountModel::setHeaderTitle()
     this->setHeaderData(2, Qt::Horizontal, tr("Account number"));
     this->setHeaderData(3, Qt::Horizontal, tr("Account type"));
     this->setHeaderData(4, Qt::Horizontal, tr("Balance"));
+    this->setHeaderData(5, Qt::Horizontal, tr("Statut"));
 }
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Uimessages</class>
+ <widget class="QMainWindow" name="Uimessages">
+  <property name="windowTitle">
+   <string>Messagerie</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QComboBox" name="comboBoxDestinataire"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEditSujet"/>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="textEditContenu"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonEnvoyer">
+      <property name="text">
+       <string>Envoyer</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableView" name="tableViewRecus"/>
+    </item>
+    <item>
+     <widget class="QTableView" name="tableViewEnvoyes"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

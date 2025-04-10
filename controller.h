@@ -11,9 +11,13 @@
 #include "uilistuser.h"
 #include "uilistclient.h"
 #include "uilistaccount.h"
+#include "ui_uilisttransaction.h"
 #include "uilisttransaction.h"
 #include "uiclient.h"
+#include "uilistnotif.h"
 #include "uiaccount.h"
+
+#include "ui_uimessages.h"
 
 class Controller : public QObject
 {
@@ -29,6 +33,8 @@ private:
     UIClient uiClient {this};
     UIListTransaction uiListTransaction {this};
     UIAccount uiAccount {this};
+    UIListNotif uiListNotif {this};
+
 
     Role connectedUserType;
     User connectedUser;
@@ -36,6 +42,7 @@ private:
     UserModel* userModel = new UserModel;
     AccountModel* accountModel = new AccountModel;
     TransactionModel* transactionModel = new TransactionModel;
+    NotificationModel* notificationModel = new NotificationModel;
 
     Service service {userModel, accountModel, transactionModel}; // Le classe service pour déclencher les fonctionnalités
 
@@ -79,6 +86,8 @@ private slots:
     void onHistorique_UIClient();
     void onOK_UIClient();
     void onCancel_UIClient();
+    void onProfile_UIClient();
+    void onNotif_UIClient();
 
     /*
      * Les slots de la fenêtre UIListClient
@@ -93,12 +102,23 @@ private slots:
     void onModifier_UIListAccount();
     void onOuvrir_UIListAccount();
     void onClose_UIListAccount();
+    void onGeler_UIListAccount();
+    void onActiver_UIListAccount();
 
     /*
      * Les slots de la fenêtre UIListTransaction
      */
     void onClose_UIListTransaction();
+    void onFiltrerClicked();
+    void onValiderClicked();
+    void onRejeterClicked();
 
+    /*
+     * Les slots de la fenêtre UIListNotif
+     */
+    void onClose_UIListNotif();
+    void onOuvrir_UIListNotif();
+    void onMessage_UIListClient();
     /*
      * Les slots de la fenêtre UIAccount
      */
